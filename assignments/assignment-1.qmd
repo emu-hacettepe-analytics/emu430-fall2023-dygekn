@@ -12,4 +12,18 @@ My first assignment has two parts.
 
 ## (a)
 
-## (b)
+## Second part is
+
+```{r}
+
+```
+
+```{r}
+library(dslabs)
+data("na_example")
+print(na_example)
+sum(is.na(na_example))
+no_na <- ifelse(is.na(na_example),0,na_example)
+print(no_na)
+sum(is.na(no_na))
+```
