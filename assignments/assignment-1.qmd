@@ -10,13 +10,77 @@ title: "Assignment 1"
 
 My first assignment has two parts.
 
-## (a)
+## First Part is 
 
-## Second part is
+### Three differences between R and Python
+
+**Data Structures:**
+
+-   R is known for its data manipulation capabilities. It has data structures like vectors, lists, data frames, and matrices.
 
 ```{r}
+# Creating a vector
+r_vector <- c(1, 2, 3, 4, 5)
 
+# Creating a data frame
+r_df <- data.frame(Name = c("Alice", "Bob", "Charlie"), Age = c(25, 30, 35))
 ```
+
+-   Python's data manipulation is often done using libraries like NumPy and Pandas. Common data structures include lists, dictionaries, and NumPy arrays.
+
+```{python}
+# Creating a list
+python_list = [1, 2, 3, 4, 5]
+
+# Creating a Pandas DataFrame
+import pandas as pd
+python_df = pd.DataFrame({'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [25, 30, 35]})
+```
+
+**Syntax:**
+
+-   R is known for its concise and vectorized syntax. It often uses functions like **`apply`**, **`lapply`**, **`sapply`** for data manipulation.
+
+```{r}
+# Sum of all elements in a vector
+sum(r_vector)
+
+# Apply a function to each element of a vector
+sapply(r_vector, function(x) x * 2)
+```
+
+-   Python syntax is more explicit. It often uses loops and list comprehensions for similar operations.
+
+```{python}
+# Sum of all elements in a list
+sum(python_list)
+
+# List comprehension to double each element
+[x * 2 for x in python_list]
+```
+
+**Function Definitions:**
+
+-   Function definitions in R use the function keyword, and function arguments are often matched by position.
+
+```{r}
+# Function definition in R
+my_function <- function(x, y) {
+  result <- x + y
+  return(result)
+}
+```
+
+-   Python uses the def keyword for function definitions, and it supports keyword arguments.
+
+```{python}
+# Function definition in Python
+def my_function(x, y):
+    result = x + y
+    return result
+```
+
+## Second part is
 
 ```{r}
 library(dslabs)

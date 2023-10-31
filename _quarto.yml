@@ -20,6 +20,8 @@ website:
           - text: Project
             href: project.qmd
             
+    reader-mode: true        
+    
     tools:
       - icon: github
         href: https://github.com/dygekn
