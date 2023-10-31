@@ -3,6 +3,8 @@ title: "About Me"
 sidebar: false 
 ---
 
+[You can download my CV](/assets/documents/CV.pdf)
+
 # Education
 
 -   B.S., Industrial Engineering, Hacettepe University, Turkey, 2023 - ongoing.
