@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>[Student/Group Full Name]’s Analytics Lab - Assignment 1</title>
+<title>[Duygu]’s Analytics Lab - Assignment 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -110,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">[Student/Group Full Name]’s Analytics Lab</span>
+    <span class="navbar-title">[Duygu]’s Analytics Lab</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -209,6 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#first-part-is" id="toc-first-part-is" class="nav-link" data-scroll-target="#first-part-is">First Part is</a>
   <ul class="collapse">
+  <li><a href="#hadley-wickham-purrr-1.0-video-summary" id="toc-hadley-wickham-purrr-1.0-video-summary" class="nav-link" data-scroll-target="#hadley-wickham-purrr-1.0-video-summary">Hadley Wickham | {purrr} 1.0 video summary</a></li>
   <li><a href="#three-differences-between-r-and-python" id="toc-three-differences-between-r-and-python" class="nav-link" data-scroll-target="#three-differences-between-r-and-python">Three differences between R and Python</a></li>
   </ul></li>
   <li><a href="#second-part-is" id="toc-second-part-is" class="nav-link" data-scroll-target="#second-part-is">Second part is</a></li>
@@ -242,6 +243,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="assignment-1" class="level1">
 <h1>Assignment 1</h1>
+<p>My first assignment has two parts.</p>
+<section id="first-part-is" class="level2">
+<h2 class="anchored" data-anchor-id="first-part-is">First Part is</h2>
+<section id="hadley-wickham-purrr-1.0-video-summary" class="level3">
+<h3 class="anchored" data-anchor-id="hadley-wickham-purrr-1.0-video-summary">Hadley Wickham | {purrr} 1.0 video summary</h3>
+<p>You can watch the video by clicking the <a href="https://www.youtube.com/watch?v=EGAs7zuRutY&amp;list=PL9HYL-VRX0oTOK4cpbCbRk15K2roEgzVW&amp;index=5">link</a></p>
+<p><img src="images/Ekran görüntüsü 2023-11-01 000846.png" class="img-fluid" width="361"></p>
 <p>The purr function offers a more effective alternative to for loops in most cases. Purr further increases the level of abstraction with map functions. Additionally, the Purr function is more user-friendly in bypassing performance bottlenecks. Purr ensures that all calculations are independent and makes it easy to share work across multiple calls. If you master the Purr function, you can write code that is shorter, clearer, and more likely to be correct to begin with.</p>
 <p>For example, you can get the progress bar using the following code:</p>
 <div class="cell">
@@ -261,17 +269,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, \(x) <span class="fu">Sys.sleep</span>(<span class="fl">0.1</span>), <span class="at">.progress =</span> <span class="st">"reticulating process"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>reticulating process ■■■■■■■■■                         26% |  ETA:  8s</code></pre>
+<pre><code>reticulating process ■■■■■■■■■                         25% |  ETA:  8s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>reticulating process ■■■■■■■■■■■■■■■■■                 53% |  ETA:  5s</code></pre>
+<pre><code>reticulating process ■■■■■■■■■■■■■■■■■                 52% |  ETA:  5s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>reticulating process ■■■■■■■■■■■■■■■■■■■■■■■■■         79% |  ETA:  2s</code></pre>
 </div>
 </div>
-<p>You can use the map() function to better understand error messages and determine where errors occur in the data set.</p>
-<p>In the new purr version, the map_vec() function adds a new function that can work with different types of vector objects. For example, it can work with different types such as date and time:</p>
+<p>You can use the <code>map()</code> function to better understand error messages and determine where errors occur in the data set.</p>
+<p>In the new purr version, the <code>map_vec()</code> function adds a new function that can work with different types of vector objects. For example, it can work with different types such as date and time:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map_vec</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, \(i) <span class="fu">Sys.Date</span>() <span class="sc">+</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -279,13 +287,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] "2023-11-02" "2023-11-02" "2023-11-02"</code></pre>
 </div>
 </div>
-<p>We also recommend using map_dfr() and map_dfc() instead of list_rbind(), list_c() and list_cbind(). However, note that these functions are not map functions.</p>
-<p>If you had a complex nested list and you had to use low level purrr functions like “unnest_longer” and “unnest_wider” to simplify things and to make a nested list single level you had to use “list_flatten()” function several times. Thanks to the Purrr package, you can more easily convert nested lists into a single list by using the “list_simplify()” function.</p>
-<p>Finally, some functionality of the ‘purr’ package will be deprecated. If you are using these deprecated functions, you will receive warning messages at 8-hour intervals. After 1 or 2 years, you will encounter error messages when you continue to use these functions. It would be more useful to choose the extend_grid() function instead of using functions to be removed such as the cross() function.</p>
+<p>We also recommend using <code>map_dfr()</code> and <code>map_dfc()</code> instead of <code>list_rbind()</code>, <code>list_c()</code> and <code>list_cbind()</code>. However, note that these functions are not map functions.</p>
+<p>If you had a complex nested list and you had to use low level purrr functions like “unnest_longer” and “unnest_wider” to simplify things and to make a nested list single level you had to use <code>"list_flatten()"</code> function several times. Thanks to the Purrr package, you can more easily convert nested lists into a single list by using the “list_simplify()” function.</p>
+<p>Finally, some functionality of the ‘purr’ package will be deprecated. If you are using these deprecated functions, you will receive warning messages at 8-hour intervals. After 1 or 2 years, you will encounter error messages when you continue to use these functions. It would be more useful to choose the <code>extend_grid()</code> function instead of using functions to be removed such as the <code>cross()</code> function.</p>
 <p>Package lifecycle and package development process is a process where not only adding new functions but also removing these functions is equally important.</p>
-<p>My first assignment has two parts.</p>
-<section id="first-part-is" class="level2">
-<h2 class="anchored" data-anchor-id="first-part-is">First Part is</h2>
+</section>
 <section id="three-differences-between-r-and-python" class="level3">
 <h3 class="anchored" data-anchor-id="three-differences-between-r-and-python">Three differences between R and Python</h3>
 <p><strong>Data Structures:</strong></p>
@@ -297,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>r_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a data frame</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>r_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Name =</span> <span class="fu">c</span>(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Charlie"</span>), <span class="at">Age =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>r_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Name =</span> <span class="fu">c</span>(<span class="st">"Duygu"</span>, <span class="st">"Pınar"</span>, <span class="st">"Elif"</span>), <span class="at">Age =</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">23</span>, <span class="dv">27</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Python’s data manipulation is often done using libraries like NumPy and Pandas. Common data structures include lists, dictionaries, and NumPy arrays.</li>
@@ -308,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a Pandas DataFrame</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>python_df <span class="op">=</span> pd.DataFrame({<span class="st">'Name'</span>: [<span class="st">'Alice'</span>, <span class="st">'Bob'</span>, <span class="st">'Charlie'</span>], <span class="st">'Age'</span>: [<span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>python_df <span class="op">=</span> pd.DataFrame({<span class="st">'Name'</span>: [<span class="st">'Duygu'</span>, <span class="st">'Pınar'</span>, <span class="st">'Elif'</span>], <span class="st">'Age'</span>: [<span class="dv">23</span>, <span class="dv">23</span>, <span class="dv">27</span>]})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>Syntax:</strong></p>
 <ul>

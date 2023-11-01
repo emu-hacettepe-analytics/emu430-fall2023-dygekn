@@ -3,4 +3,4 @@ title: "My Blog"
 sidebar: false 
 ---
 
-This page is under construction.
+Soon.
