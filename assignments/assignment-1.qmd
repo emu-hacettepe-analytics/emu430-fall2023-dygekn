@@ -117,6 +117,7 @@ def my_function(x, y):
 ## Second part is
 
 ```{r}
+install.packages("dslabs")
 library(dslabs)
 data("na_example")
 print(na_example)
