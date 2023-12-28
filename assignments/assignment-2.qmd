@@ -5,5 +5,153 @@ title: "Assignment 2"
 # Assignment 2
 
 ```{r}
-1 + 1
+library(tidyverse)
+library(rvest)
+library(stringr)
+
+movie_urls <- c(
+  "https://m.imdb.com/search/title/?title_type=feature&num_votes=2500,&country_of_origin=TR&release_date=2010-01-01,2023-12-31&count=250",
+  "https://m.imdb.com/search/title/?title_type=feature&num_votes=2500,&country_of_origin=TR&release_date=,2009-12-31&count=250"
+)
+movie_data <- data.frame()
+for (url in movie_urls) {
+  data_html <- read_html(url)
+  
+  title_names <- data_html |> html_nodes('.ipc-title__text')
+  title_names <- html_text(title_names)
+  title_names <- tail(head(title_names, -1), -1)
+  title_names <- str_split(title_names, " ", n = 2)
+  title_names <- unlist(lapply(title_names, function(x) {x[2]}))
+  
+  year_values <- data_html |> html_nodes('.dli-title-metadata-item:nth-child(1)')
+  year_values <- html_text(year_values)
+  year_values <- str_remove_all(year_values, "[()]")
+  year_values <- as.numeric(year_values)
+  
+  duration_values <- data_html |> html_nodes('.dli-title-metadata-item:nth-child(2)')
+  duration_values <- html_text(duration_values)
+  
+  # I helped Chatgbt
+  converted_duration <- sapply(duration_values, function(duration) {
+    hours <- as.numeric(substr(duration, 1, 1))
+    minutes <- ifelse(nchar(duration) > 2, as.integer(substring(duration, nchar(duration) - 2, nchar(duration) - 1)), 0)
+    total_minutes <- 60 * hours + minutes
+    return(total_minutes)
+  })
+  
+  rating_values <- data_html %>% html_nodes('.ratingGroup--imdb-rating') %>% html_text() %>%
+    str_match("\\b([0-9]+\\.[0-9]+)") %>% as.numeric() 
+  
+  vote_values <- data_html |>  html_nodes(".kRnqtn")
+  vote_values <- html_text(vote_values)
+  vote_values <- str_remove_all(vote_values, "[a-zA-Z,]") 
+  vote_values <- as.numeric(vote_values)
+  
+  temp_data <- data.frame(Title = title_names,
+                          Year = year_values,
+                          Duration = converted_duration,
+                          Rating = rating_values,
+                          Votes = vote_values)
+  temp_data <- unique(temp_data)
+  movie_data <- rbind(movie_data, temp_data)
+} 
+
+
+#References
+#https://stringr.tidyverse.org/reference/str_remove.html
+#https://stackoverflow.com/questions/63407427/how-to-split-hour-and-minute-from-my-dataset
+#https://stringr.tidyverse.org/reference/str_match.htm
 ```
+
+a\)
+
+```{r}
+movie_data <- movie_data |> arrange(desc(Rating))
+top_5 <- head(movie_data, 5)
+bottom_5 <- tail(movie_data, 5)
+library(knitr)
+kable(rbind(top_5, bottom_5), caption = "The Top 5 Movies and The Worst 5 Movies")
+#References
+#https://bookdown.org/yihui/rmarkdown-cookbook/kable.html
+```
+
+From the Top 5 section, I only watched Hababam S??n??f?? and CM101MMXI Fundamentals. Among these two movies, Hababam S??n??f?? may be my favorite. I haven't watched any of the 5 worst movies. I think the IMDB ranking is reasonable.
+
+b\)
+
+```{r}
+movie_data |> filter(Title %in% c("A.R.O.G", "Sevmek Zamani"))
+```
+
+c\)
+
+```{r}
+#plot the rating averages as a scatter plot
+library(dplyr)
+library(ggplot2)
+rating_averages <- movie_data %>% group_by(Year) %>% summarise(Average_Rating = mean(Rating))
+ggplot(rating_averages, aes(x = Year, y = Average_Rating)) +
+  geom_point() +
+  labs(title = "Average Rating of Turkish Movies by Year",
+       x = "Year",
+       y = "Average Rating")+ theme(axis.text.x = element_text(angle= 90, hjust = 1)) 
+```
+
+From this graph, we can see that the average rating vary over the years, but there is an overall decreasing trend. For example, while average rating were around 8 in the early 1970s, they dropped to around 6 in the 2010s. This shows that the average vote value of Turkish films has decreased over time.
+
+However, average rating alone may not be a sufficient indicator. Because a different number of movies are shot every year, which may affect the average ating. For example, fewer shots were taken in 1960 than in 2000. This does not necessarily mean that the films shot in 1960 were of very high quality. Therefore, it is necessary to consider the number of films.
+
+```{r}
+# plot the number of movies over the years
+movie_counts <- movie_data %>%
+  count(Year)
+ggplot(movie_counts, aes(x = Year, y = n)) +
+  geom_point() +
+  labs(title = "Number of Turkish Movies by Year",
+       x = "Year",
+       y = "Number of Movies") + theme(axis.text.x = element_text(angle= 90, hjust = 1)) 
+```
+
+From this graph, we can see that the number of movies is increasing over the years, but there are some fluctuations. It shows us that it increases over time.
+
+```{r}
+#To plot the box plots of ratings over the years
+movie_data <- movie_data %>% mutate(Year = reorder(Year, Rating, FUN = median)) 
+ggplot(movie_data, aes(x = factor(Year), y = Rating)) +
+  geom_boxplot() +
+  labs(title = "Box Plot of Ratings of Turkish Movies by Year",
+       x = "Year",
+       y = "Rating") +theme(axis.text.x = element_text(angle= 90, hjust = 1)) 
+```
+
+As can be seen in the graph, it is generally seen that as the number of years increases, the average number of votes for films decreases. It may indicate that the scores of films from 2004 are distributed over a wide range.
+
+```{r}
+cor(movie_data$Votes, movie_data$Rating, use = "complete.obs") 
+cor(movie_data$Duration, movie_data$Rating, use = "complete.obs")
+#References
+#https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/cor
+```
+
+According to these outputs, I can say that there is a very weak positive correlation between the number of votes and the rating This shows that the rate tends to increase slightly as the number of votes increases. However, this relationship is not very strong.
+
+I can say that there is almost zero correlation between time and rate. This shows that there is no linear relationship between time and rate. So, no matter how long or short the movie is, its rate does not change.
+
+```{r}
+url_new <- "https://m.imdb.com/search/title/?title_type=feature&sort=moviemeter,asc&groups=top_1000&country_of_origin=TR"
+page <- read_html(url_new)
+titles <- page |> html_nodes('.ipc-title__text') |> html_text()
+titles <- tail(head(titles,-1),-1)
+titles <- str_split(titles, " ", n=2)
+titles <- unlist(lapply(titles, function(x) {x[2]}))
+years <- page |> html_nodes('.dli-title-metadata-item:nth-child(1)') |> html_text()
+years <- str_remove_all(years, "[()]")
+years <- as.numeric(years)
+movie_data$Year <- as.numeric(as.character(movie_data$Year))
+new_data <- data.frame(Title = titles, Year = years)
+new_data <- inner_join(movie_data, new_data, by = c("Title", "Year"))
+new_data %>% arrange(desc(Rating)) %>% head(11)
+
+```
+
+These movies are not ranked the same as the highest-rated movies in the first data frame. Other variations of IMDb may also have been used. For example, popularity, critics' comments, awards, etc.
